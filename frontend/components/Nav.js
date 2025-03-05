@@ -1,13 +1,30 @@
 import Link from 'next/link';
 import React from 'react';
+import NavStyles from './styles/NavStyles';
+import { useUser } from './User';
+import { SignOut } from './SignOut';
 
-const Nav = () => (
-  <nav>
-    <Link href="/products">products</Link>
-    <Link href="/sell">sell</Link>
-    <Link href="/orders">orders</Link>
-    <Link href="/account">account</Link>
-  </nav>
-);
+const Nav = () => {
+  const user = useUser();
+
+  return (
+    <NavStyles>
+      <Link href="/products">products</Link>
+      {user && (
+        <>
+          <Link href="/sell">sell</Link>
+          <Link href="/orders">orders</Link>
+          <Link href="/account">account</Link>
+          <SignOut />
+        </>
+      )}
+      {!user && (
+        <>
+          <Link href="/signin">Sign In</Link>
+        </>
+      )}
+    </NavStyles>
+  );
+};
 
 export default Nav;
